@@ -1,4 +1,4 @@
-foolscalculator.github.io
+amrkarthik.github.io
 =========================
 
-Fools Calculator : A windows store app
+My personal works repository.
