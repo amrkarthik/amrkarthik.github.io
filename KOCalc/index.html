@@ -1,0 +1,178 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive product landing page.">
+    <title>KnockOut &ndash; Calc</title>
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+
+    <!--[if lte IE 8]>
+
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-old-ie-min.css">
+
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+
+    <!--<![endif]-->
+    <style>
+        .footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            height: 60px;
+            width: 100%;
+            background: #999;
+        }
+
+        .social {
+            width: 46px;
+            height: 44px;
+        }
+    </style>
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="css/layouts/marketing.css">
+    <!--<![endif]-->
+
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <script type="text/javascript" src="knockout-3.1.0.js"></script>
+    <script type='text/javascript'>
+        var model;
+
+        function numClicked(number) {
+            if (model.operator() == '' || model.firstNumc() == '') {
+                model.firstNumc(model.firstNumc() + number);
+            }
+            else { model.secondNum(model.secondNum() + number); }
+        }
+
+        function opClicked(operator) {
+
+            if (operator == '=') {
+                model.operator("");
+                model.firstNumc("");
+                model.secondNum("");
+            }
+            else { model.operator(operator); }
+        }
+
+
+
+        window.onload = function () {
+
+            model = {
+                firstNumc: ko.observable(""),
+                secondNum: ko.observable(""),
+                operator: ko.observable(""),
+
+            };
+
+            function app() {
+                this.model1 = ko.observable(model);
+                this.result = ko.computed(function () {
+                    if (model.secondNum() != '' && model.firstNumc() != '') {
+                        return eval(model.firstNumc() + model.operator() + model.secondNum());
+                    }
+                    if (model.secondNum() == '') {
+                        return model.firstNumc();
+                    }
+                });
+
+                this.nums = [{ val: 1 },
+                { val: 2 },
+                { val: 3 },
+                { val: 4 },
+                { val: 5 },
+                { val: 6 },
+                { val: 7 },
+                { val: 8 },
+                { val: 9 },
+                { val: 0 }];
+
+            }
+
+            document.getElementById("txtNum").onkeypress = function (e) {
+                return false;
+            }
+
+            // Activates knockout.js
+            ko.applyBindings(new app());
+            //model.result = ko.computed(function(){ new calc()});
+        }
+        function calc() {
+            var self = this;
+            self.resultNumb = ko.computed(function () {
+                if (typeof model != 'undefined') {
+                    if (model.secondNum() != '') {
+                        return eval(model.firstNumc() + model.operator() + model.secondNum());
+                    }
+                    if (model.secondNum() == '') {
+                        return model.firstNumc();
+                    }
+                }
+            });
+            return self.resultNumb;
+        }
+        //ko.applyBindings(model);
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+            <a class="pure-menu-heading" href="index.html">Knock Out Calci</a>
+            <!--<ul>
+                <li class="pure-menu-selected"><a href="#">Home</a></li>
+                <li><a href="#">Tour</a></li>
+                <li><a href="#">Sign Up</a></li>
+            </ul>-->
+        </div>
+    </div>
+    <div class="splash" style="margin-top:-4%">
+        <h1 class="splash-head">
+            <input id="txtNum" placeholder="Calculate" data-bind="value: result" />
+            <h4>
+                <div>
+                    <a onclick="numClicked(7)" class="pure-button">7</a>
+                    <a href="#" onclick="numClicked(8)" class="pure-button">8</a>
+                    <a onclick="numClicked(9)" class="pure-button">9</a>
+                    <a onclick="opClicked('/')" class="pure-button">/</a>
+                </div><p></p>
+                <div>
+                    <a onclick="numClicked(4)" class="pure-button">4</a>
+                    <a onclick="numClicked(5)" class="pure-button">5</a>
+                    <a onclick="numClicked(6)" class="pure-button">6</a>
+                    <a onclick="opClicked('*')" class="pure-button">*</a>
+                </div><p></p>
+                <div>
+                    <a onclick="numClicked(1)" class="pure-button">1</a>
+                    <a onclick="numClicked(2)" class="pure-button">2</a>
+                    <a onclick="numClicked(3)" class="pure-button">3</a>
+                    <a onclick="opClicked('-')" class="pure-button">-</a>
+                </div><p></p>
+                <div>
+                    <a onclick="numClicked('.')" class="pure-button">.</a>
+                    <a onclick="numClicked(0)" class="pure-button">0</a>
+                    <button onclick="opClicked('=')" class="pure-button">~</button>
+                    <a onclick="opClicked('+')" class="pure-button">+</a>
+                </div>
+                <br />
+            </h4>
+        </h1>
+    </div>
+    <div class="footer" align="center">
+        <a href="http://twitter.com/amrkarthik" target="_blank"><img class="social" alt="tw" src="css/icons/twitter.png" /></a>
+        <a href="https://www.facebook.com/amrkarthik" target="_blank"><img class="social" alt="tw" src="css/icons/facebook.png"></a>
+        <a href="http://in.linkedin.com/in/amrkarthik" target="_blank"><img class="social" alt="tw" src="css/icons/linkedin.png"></a>
+        <a href="https://plus.google.com/+KarthikAMR" target="_blank"><img class="social" alt="tw" src="css/icons/g+.png"></a>
+    </div>
+</body>
+</html>
