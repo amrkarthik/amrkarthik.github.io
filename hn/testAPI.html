@@ -8,10 +8,12 @@ var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("demo").innerHTML = this.responseText;
+      callHN();
     }
   };
   xhttp.open("GET", "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty", true);
   xhttp.send();
+  
 };
 </script>
 </html>
