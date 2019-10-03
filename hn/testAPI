@@ -1,0 +1,17 @@
+<html>
+<button>Call HN</button>
+<br/>
+<p id='demo'></p>
+<script>
+callHN = function(){
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET", "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty", true);
+  xhttp.send();
+};
+</script>
+</html>
